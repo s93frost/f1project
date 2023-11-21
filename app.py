@@ -3,7 +3,6 @@ import os, urllib.request
 from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
-
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import (
@@ -82,18 +81,23 @@ def index():
     next_plus_one = next_race(2)
 
     # calling wiki picture api functions for each track if not already exists
-    if not os.path.isfile(
-        f'/workspaces/47425976/project/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
-    ):
-        track_pic(last_race)
-    if not os.path.isfile(
-        f'/workspaces/47425976/project/static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
-    ):
-        track_pic(next)
-    if not os.path.isfile(
-        f'/workspaces/47425976/project/static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
-    ):
-        track_pic(next_plus_one)
+    if last_race != None:  # checks if there is a last race returned by the API
+        if not os.path.isfile(
+            f'/home/s93frost/f1project-main/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
+        ):
+            track_pic(last_race)
+
+    if next != None: # checks if next race returned by the API (for end of season)
+        if not os.path.isfile(
+            f'/home/s93frost/f1project-main/static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
+        ):
+            track_pic(next)
+
+    if next_plus_one != None:  # checks if next plus one race returned by the API (for end of season)
+        if not os.path.isfile(
+            f'/home/s93frost/f1project-main/static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
+        ):
+            track_pic(next_plus_one)
 
     # for dict of all teams in currrent year - this isn't required - only to preload so wait time isn't too long once clicking on /drivers route
     if not teams_dict:
@@ -145,7 +149,7 @@ def drivers():
     # to pull all pictures for drivers from their wikipedia url if file not already exists
     for x in drivers_dict.values():
         if os.path.isfile(
-            f'/workspaces/47425976/project/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg'
+            f'/home/s93frost/f1project-main/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg'
         ):
             continue
         else:
@@ -158,7 +162,7 @@ def drivers():
             if url:
                 urllib.request.urlretrieve(
                     url,
-                    f'/workspaces/47425976/project/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg',
+                    f'/home/s93frost/f1project-main/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg',
                 )
 
     driver_standing = driver_standings()
@@ -186,7 +190,7 @@ def teams():
     if team_pics == False:
         for x in teams_dict.values():
             if os.path.isfile(
-                f'/workspaces/47425976/project/static/team_pics/{x["constructorId"]}.jpg'
+                f'/home/s93frost/f1project-main/static/team_pics/{x["constructorId"]}.jpg'
             ):
                 continue
             else:
@@ -198,7 +202,7 @@ def teams():
                 if url:
                     urllib.request.urlretrieve(
                         url,
-                        f'/workspaces/47425976/project/static/team_pics/{x["constructorId"]}.jpg',
+                        f'/home/s93frost/f1project-main/static/team_pics/{x["constructorId"]}.jpg',
                     )
         # sets variable as true after loop run so doesn't check again if already pulled
         team_pics = True
@@ -255,7 +259,7 @@ def results():
     if url:
         urllib.request.urlretrieve(
             url,
-            f'/workspaces/47425976/project/static/race_pics/{data["Races"][0]["raceName"]}.jpg',
+            f'/home/s93frost/f1project-main/static/race_pics/{data["Races"][0]["raceName"]}.jpg',
         )
 
     current_year = data["season"]
@@ -292,7 +296,7 @@ def results():
             if url:
                 urllib.request.urlretrieve(
                     url,
-                    f'/workspaces/47425976/project/static/race_pics/{selected_data["Races"][0]["raceName"]}.jpg',
+                    f'/home/s93frost/f1project-main/static/race_pics/{selected_data["Races"][0]["raceName"]}.jpg',
                 )
         else:
             # if no result data from API (may not be needed now i've limited to only valid seasons & rounds)

@@ -47,7 +47,7 @@ def track_pic(track):
     if url:
         urllib.request.urlretrieve(
             url,
-            f'/workspaces/47425976/project/static/track_pics/{track["Circuit"]["circuitName"]}.jpg',
+            f'/static/track_pics/{track["Circuit"]["circuitName"]}.jpg',
         )
 
 

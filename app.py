@@ -81,19 +81,19 @@ def index():
     next_plus_one = next_race(2)
 
     # calling wiki picture api functions for each track if not already exists
-    if last_race != None:  # checks if there is a last race returned by the API
+    if last_race != None and last_race != False:  # checks if there is a last race returned by the API
         if not os.path.isfile(
             f'/home/s93frost/f1project-main/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(last_race)
 
-    if next != None: # checks if next race returned by the API (for end of season)
+    if next != None and next != False: # checks if next race returned by the API (for end of season)
         if not os.path.isfile(
             f'/home/s93frost/f1project-main/static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(next)
 
-    if next_plus_one != None:  # checks if next plus one race returned by the API (for end of season)
+    if next_plus_one != None and next_plus_one != False:  # checks if next plus one race returned by the API (for end of season)
         if not os.path.isfile(
             f'/home/s93frost/f1project-main/static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
         ):

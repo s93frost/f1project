@@ -36,7 +36,7 @@ def picture(wiki_search_title):
         return None
 
 
-def track_pic(track):
+def track_pic(track, directory):
     """function for getting track pictures using the picture function defined above"""
     wiki_url = track["Circuit"]["url"]
     # splits out page title from wiki page for API search
@@ -46,7 +46,7 @@ def track_pic(track):
     if url:
         urllib.request.urlretrieve(
             url,
-            f'/static/track_pics/{track["Circuit"]["circuitName"]}.jpg',
+            f'{directory}/static/track_pics/{track["Circuit"]["circuitName"]}.jpg',
         )
 
 

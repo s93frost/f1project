@@ -45,6 +45,7 @@ team_pics = False
 current_season = ""
 seasons_and_names = {}  # dict for storing seasons and race_name combinations
 seasons_and_races = {}  # dict for storing seasons and race_name combinations
+DIRECTORY = os.getcwd()
 
 
 @app.context_processor
@@ -89,23 +90,23 @@ def index():
     # calling wiki picture api functions for each track if not already exists
     if last_race is not None and last_race is not False:  # checks if there is a last race returned by the API
         if not os.path.isfile(
-            f'/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
+            f'{DIRECTORY}/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
         ):
-            track_pic(last_race)
+            track_pic(last_race, DIRECTORY)
 
     # checks if next race returned by the API (for end of season)
     if next is not None and next is not False:
         if not os.path.isfile(
-            f'/static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
+            f'{DIRECTORY}/static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
         ):
-            track_pic(next)
+            track_pic(next, DIRECTORY)
 
     # checks if next plus one race returned by the API (for end of season)
     if next_plus_one is not None and next_plus_one is not False:
         if not os.path.isfile(
-            f'/static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
+            f'{DIRECTORY}/static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
         ):
-            track_pic(next_plus_one)
+            track_pic(next_plus_one, DIRECTORY)
 
     # for dict of all teams in currrent year - this isn't required - only to preload so wait time isn't too long once clicking on /drivers route
     if not teams_dict:
@@ -157,7 +158,7 @@ def drivers():
     # to pull all pictures for drivers from their wikipedia url if file not already exists
     for x in drivers_dict.values():
         if os.path.isfile(
-            f'/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg'
+            f'{DIRECTORY}/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg'
         ):
             continue
         else:
@@ -170,7 +171,7 @@ def drivers():
             if url:
                 urllib.request.urlretrieve(
                     url,
-                    f'/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg',
+                    f'{DIRECTORY}/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg',
                 )
 
     driver_standing = driver_standings()
@@ -198,7 +199,7 @@ def teams():
     if team_pics == False:
         for x in teams_dict.values():
             if os.path.isfile(
-                f'/static/team_pics/{x["constructorId"]}.jpg'
+                f'{DIRECTORY}/static/team_pics/{x["constructorId"]}.jpg'
             ):
                 continue
             else:
@@ -210,7 +211,7 @@ def teams():
                 if url:
                     urllib.request.urlretrieve(
                         url,
-                        f'/static/team_pics/{x["constructorId"]}.jpg',
+                        f'{DIRECTORY}/static/team_pics/{x["constructorId"]}.jpg',
                     )
         # sets variable as true after loop run so doesn't check again if already pulled
         team_pics = True
@@ -295,7 +296,7 @@ def results():
             if url:
                 urllib.request.urlretrieve(
                     url,
-                    f'/static/race_pics/{selected_data["Races"][0]["raceName"]}.jpg',
+                    f'{DIRECTORY}/static/race_pics/{selected_data["Races"][0]["raceName"]}.jpg',
                 )
 
         else:
@@ -325,7 +326,7 @@ def results():
         if url:
             urllib.request.urlretrieve(
                 url,
-                f'/static/race_pics/{data["Races"][0]["raceName"]}.jpg',
+                f'{DIRECTORY}/static/race_pics/{data["Races"][0]["raceName"]}.jpg',
             )
 
         current_year = data["season"]

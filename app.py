@@ -87,21 +87,21 @@ def index():
     # calling wiki picture api functions for each track if not already exists
     if last_race != None and last_race != False:  # checks if there is a last race returned by the API
         if not os.path.isfile(
-            f'/home/s93frost/f1project-main/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
+            f'/home/s93frost/f1project/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(last_race)
 
     # checks if next race returned by the API (for end of season)
     if next != None and next != False:
         if not os.path.isfile(
-            f'/home/s93frost/f1project-main/static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
+            f'/home/s93frost/f1project/static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(next)
 
     # checks if next plus one race returned by the API (for end of season)
     if next_plus_one != None and next_plus_one != False:
         if not os.path.isfile(
-            f'/home/s93frost/f1project-main/static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
+            f'/home/s93frost/f1project/static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(next_plus_one)
 
@@ -155,7 +155,7 @@ def drivers():
     # to pull all pictures for drivers from their wikipedia url if file not already exists
     for x in drivers_dict.values():
         if os.path.isfile(
-            f'/home/s93frost/f1project-main/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg'
+            f'/home/s93frost/f1project/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg'
         ):
             continue
         else:
@@ -168,7 +168,7 @@ def drivers():
             if url:
                 urllib.request.urlretrieve(
                     url,
-                    f'/home/s93frost/f1project-main/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg',
+                    f'/home/s93frost/f1project/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg',
                 )
 
     driver_standing = driver_standings()
@@ -196,7 +196,7 @@ def teams():
     if team_pics == False:
         for x in teams_dict.values():
             if os.path.isfile(
-                f'/home/s93frost/f1project-main/static/team_pics/{x["constructorId"]}.jpg'
+                f'/home/s93frost/f1project/static/team_pics/{x["constructorId"]}.jpg'
             ):
                 continue
             else:
@@ -208,7 +208,7 @@ def teams():
                 if url:
                     urllib.request.urlretrieve(
                         url,
-                        f'/home/s93frost/f1project-main/static/team_pics/{x["constructorId"]}.jpg',
+                        f'/home/s93frost/f1project/static/team_pics/{x["constructorId"]}.jpg',
                     )
         # sets variable as true after loop run so doesn't check again if already pulled
         team_pics = True
@@ -293,7 +293,7 @@ def results():
             if url:
                 urllib.request.urlretrieve(
                     url,
-                    f'/home/s93frost/f1project-main/static/race_pics/{selected_data["Races"][0]["raceName"]}.jpg',
+                    f'/home/s93frost/f1project/static/race_pics/{selected_data["Races"][0]["raceName"]}.jpg',
                 )
 
         else:
@@ -323,7 +323,7 @@ def results():
         if url:
             urllib.request.urlretrieve(
                 url,
-                f'/home/s93frost/f1project-main/static/race_pics/{data["Races"][0]["raceName"]}.jpg',
+                f'/home/s93frost/f1project/static/race_pics/{data["Races"][0]["raceName"]}.jpg',
             )
 
         current_year = data["season"]

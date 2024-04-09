@@ -44,11 +44,11 @@ def track_pic(track):
     wiki_search_title = wiki_url.split("/")[-1]
     # uses title for API function search tp pull picture
     url = picture(wiki_search_title)
-    ''' if url:
+    if url:
         urllib.request.urlretrieve(
             url,
-            f'/home/s93frost/f1project/static/static/track_pics/{track["Circuit"]["circuitName"]}.jpg',
-        ) '''
+            f'/static/static/track_pics/{track["Circuit"]["circuitName"]}.jpg',
+        )
 
 
 def fastest(year, round):

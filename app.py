@@ -84,6 +84,9 @@ def index():
     next = next_race(1)
     next_plus_one = next_race(2)
 
+    print(f'CURRENT DIRECTORY = {os.getcwd()}')
+    print(DVFVRBVFBFSBSFBSFBSFBFS)
+
     # calling wiki picture api functions for each track if not already exists
     if last_race != None and last_race != False:  # checks if there is a last race returned by the API
         if not os.path.isfile(

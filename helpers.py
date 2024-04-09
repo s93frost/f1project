@@ -1,8 +1,7 @@
-import requests
 import urllib
-
-from flask import redirect, session
 from functools import wraps
+from flask import redirect, session
+import requests
 
 
 def login_required(f):
@@ -47,7 +46,7 @@ def track_pic(track):
     if url:
         urllib.request.urlretrieve(
             url,
-            f'/Users/samuelfrost/repos/f1project/static/track_pics/{track["Circuit"]["circuitName"]}.jpg',
+            f'/static/track_pics/{track["Circuit"]["circuitName"]}.jpg',
         )
 
 

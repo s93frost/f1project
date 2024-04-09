@@ -85,24 +85,23 @@ def index():
     next_plus_one = next_race(2)
 
     print(f'CURRENT DIRECTORY = {os.getcwd()}')
-    print(DVFVRBVFBFSBSFBSFBSFBFS)
 
     # calling wiki picture api functions for each track if not already exists
-    if last_race != None and last_race != False:  # checks if there is a last race returned by the API
+    if last_race is not None and last_race is not False:  # checks if there is a last race returned by the API
         if not os.path.isfile(
             f'/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(last_race)
 
     # checks if next race returned by the API (for end of season)
-    if next != None and next != False:
+    if next is not None and next is not False:
         if not os.path.isfile(
             f'/static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(next)
 
     # checks if next plus one race returned by the API (for end of season)
-    if next_plus_one != None and next_plus_one != False:
+    if next_plus_one is not None and next_plus_one is not False:
         if not os.path.isfile(
             f'/static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
         ):

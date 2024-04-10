@@ -108,9 +108,9 @@ def index():
         ):
             track_pic(next_plus_one, DIRECTORY)
 
-    # for dict of all teams in currrent year - this isn't required - only to preload so wait time isn't too long once clicking on /drivers route
+    # dict of all teams in currrent year - not required - to preload so wait time isn't  long on /drivers route
     if not teams_dict:
-        global teams  # specifies global so can be used by render template once already created and teams_dict already made
+        global teams  # global can be used by render template once self and teams_dict already made
         teams = teams_lookup()
         for team in teams:
             name = team["constructorId"]

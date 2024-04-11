@@ -1,9 +1,13 @@
-import os, urllib.request
+''' THis file is the application file serving the python logic for 
+differnt routes and templates used by the web app'''
+
+import os
+import urllib.request
 
 from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session
-from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_session import Session
 
 from helpers import (
     login_required,
@@ -88,7 +92,8 @@ def index():
     print(f'CURRENT DIRECTORY = {os.getcwd()}')
 
     # calling wiki picture api functions for each track if not already exists
-    if last_race is not None and last_race is not False:  # checks if there is a last race returned by the API
+    # checks if there is a last race returned by the API
+    if last_race is not None and last_race is not False:
         if not os.path.isfile(
             f'{DIRECTORY}/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
         ):
@@ -108,9 +113,9 @@ def index():
         ):
             track_pic(next_plus_one, DIRECTORY)
 
-    # for dict of all teams in currrent year - this isn't required - only to preload so wait time isn't too long once clicking on /drivers route
+    # dict of teams in currrent year - preloads so wait time isn't  long on /drivers route
     if not teams_dict:
-        global teams  # specifies global so can be used by render template once already created and teams_dict already made
+        global teams  # global can be used by render template once self and teams_dict already made
         teams = teams_lookup()
         for team in teams:
             name = team["constructorId"]
@@ -133,7 +138,8 @@ def drivers():
 
     # for dict of all teams in currrent year
     if not teams_dict:
-        global teams  # specifies global so can be used by render template once already created and teams_dict already made
+        # global so can be used by render template once already created and teams_dict already made
+        global teams
         teams = teams_lookup()
         for team in teams:
             name = team["constructorId"]
@@ -141,7 +147,8 @@ def drivers():
 
     # for dict of all drivers in currrent year
     if not drivers_dict:
-        global drivers  # specifies global so can be used by render template once already created and teams_dict already made
+        # global so can be used by rendertemplate if already created and teams_dict made
+        global drivers
         drivers = drivers_lookup()
         for driver in drivers:
             drivers_dict[driver["driverId"]] = driver
@@ -188,7 +195,8 @@ def teams():
 
     # for dict  of all teams in currrent year
     if not teams_dict:
-        global teams  # specifies global so can be used by render template once already created and teams_dict already made
+        # specify global can be used by rendertemplate if already created and teams_dict made
+        global teams
         teams = teams_lookup()
         for team in teams:
             name = team["constructorId"]
@@ -196,7 +204,7 @@ def teams():
 
     # to pull all pictures for teams from their wikipedia url if file not already exists
     global team_pics
-    if team_pics == False:
+    if team_pics is False:
         for x in teams_dict.values():
             if os.path.isfile(
                 f'{DIRECTORY}/static/team_pics/{x["constructorId"]}.jpg'
@@ -218,7 +226,8 @@ def teams():
 
     # for dict of all drivers in currrent year
     if not drivers_dict:
-        global drivers  # specifies global so can be used by render template once already created and drivers_dict already made
+        # global so can be used by rendertemplate if already created and drivers_dict  made
+        global drivers
         drivers = drivers_lookup()
         for driver in drivers:
             drivers_dict[driver["driverId"]] = driver
@@ -250,7 +259,7 @@ def results():
 
     if not seasons_and_names:
         all_seasons = seasons_history()
-        # to get list of all seasons being pulled by APi (offset due to size so starts in later year)
+        # get list of all seasons being pulled by APi (offset due to size so starts in later year)
         for x in all_seasons:
             seasons_and_names[x["season"]] = []
             seasons_and_races[x["season"]] = {}
@@ -300,7 +309,7 @@ def results():
                 )
 
         else:
-            # if no result data from API (may not be needed now i've limited to only valid seasons & rounds)
+            # if no data from API
             result_data = None
 
         return render_template(
@@ -351,19 +360,21 @@ def results():
 @app.route("/driver_history", methods=["GET", "POST"])
 @login_required  # decorator to ensure logged in
 def driver_history():
-    """allows user to pick drivers from current teams and list all the seasons that they've been with that team"""
+    """allows user to pick drivers from current teams and 
+    list all seasons that they've been with that team"""
 
-    # for dict of all teams in currrent year
+    # for dict of all teams in current year
     if not teams_dict:
-        global teams  # specifies global so can be used by render template once already created and teams_dict already made
+        # global so can be used by rendertemplate if already created and teams_dict made
+        global teams
         teams = teams_lookup()
         for team in teams:
             name = team["constructorId"]
             teams_dict[name] = team
 
-    # for dict of all drivers in currrent year
-    if not drivers_dict:
-        global drivers  # specifies global so can be used by render template once already created and drivers_dict already made
+    if not drivers_dict: # for dict of all drivers in currrent year
+        # specifiy global can be used by rendertemplate if already created and drivers_dict made
+        global drivers
         drivers = drivers_lookup()
         for driver in drivers:
             drivers_dict[driver["driverId"]] = driver
@@ -404,7 +415,7 @@ def driver_history():
 
         # pulls corresponding driver_id for the name selected on form held in drivers_name variable
         driver_id = driver_names[drivers_name]
-        # pulls corresponding constructor_id for the name selected on form held in constructor_name variable
+        # pulls constructor_id for the name selected on form in constructor_name variable
         constructor_id = team_names[constructor_name]
         # my driver and constructor info API function
         info = lookup(driver_id, constructor_id)

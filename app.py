@@ -95,21 +95,21 @@ def index():
     # checks if there is a last race returned by the API
     if last_race is not None and last_race is not False:
         if not os.path.isfile(
-            f'{DIRECTORY}/static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
+            f'./static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(last_race, DIRECTORY)
 
     # checks if next race returned by the API (for end of season)
     if next is not None and next is not False:
         if not os.path.isfile(
-            f'{DIRECTORY}/static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
+            f'./static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(next, DIRECTORY)
 
     # checks if next plus one race returned by the API (for end of season)
     if next_plus_one is not None and next_plus_one is not False:
         if not os.path.isfile(
-            f'{DIRECTORY}/static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
+            f'./static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
         ):
             track_pic(next_plus_one, DIRECTORY)
 
@@ -165,7 +165,7 @@ def drivers():
     # to pull all pictures for drivers from their wikipedia url if file not already exists
     for x in drivers_dict.values():
         if os.path.isfile(
-            f'{DIRECTORY}/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg'
+            f'./static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg'
         ):
             continue
         else:
@@ -178,7 +178,7 @@ def drivers():
             if url:
                 urllib.request.urlretrieve(
                     url,
-                    f'{DIRECTORY}/static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg',
+                    f'./static/driver_pics/{x["givenName"]}{x["familyName"]}.jpg',
                 )
 
     driver_standing = driver_standings()
@@ -207,7 +207,7 @@ def teams():
     if team_pics is False:
         for x in teams_dict.values():
             if os.path.isfile(
-                f'{DIRECTORY}/static/team_pics/{x["constructorId"]}.jpg'
+                f'./static/team_pics/{x["constructorId"]}.jpg'
             ):
                 continue
             else:
@@ -219,7 +219,7 @@ def teams():
                 if url:
                     urllib.request.urlretrieve(
                         url,
-                        f'{DIRECTORY}/static/team_pics/{x["constructorId"]}.jpg',
+                        f'./static/team_pics/{x["constructorId"]}.jpg',
                     )
         # sets variable as true after loop run so doesn't check again if already pulled
         team_pics = True
@@ -305,7 +305,7 @@ def results():
             if url:
                 urllib.request.urlretrieve(
                     url,
-                    f'{DIRECTORY}/static/race_pics/{selected_data["Races"][0]["raceName"]}.jpg',
+                    f'./static/race_pics/{selected_data["Races"][0]["raceName"]}.jpg',
                 )
 
         else:
@@ -335,7 +335,7 @@ def results():
         if url:
             urllib.request.urlretrieve(
                 url,
-                f'{DIRECTORY}/static/race_pics/{data["Races"][0]["raceName"]}.jpg',
+                f'./static/race_pics/{data["Races"][0]["raceName"]}.jpg',
             )
 
         current_year = data["season"]

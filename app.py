@@ -1,4 +1,4 @@
-''' THis file is the application file serving the python logic for 
+''' This file is the application file serving the python logic for 
 differnt routes and templates used by the web app'''
 
 import os
@@ -49,8 +49,6 @@ team_pics = False
 current_season = ""
 seasons_and_names = {}  # dict for storing seasons and race_name combinations
 seasons_and_races = {}  # dict for storing seasons and race_name combinations
-DIRECTORY = os.getcwd()
-
 
 @app.context_processor
 def inject_user():
@@ -89,29 +87,27 @@ def index():
     next = next_race(1)
     next_plus_one = next_race(2)
 
-    print(f'CURRENT DIRECTORY = {os.getcwd()}')
-
     # calling wiki picture api functions for each track if not already exists
     # checks if there is a last race returned by the API
     if last_race is not None and last_race is not False:
         if not os.path.isfile(
             f'./static/track_pics/{last_race["Circuit"]["circuitName"]}.jpg'
         ):
-            track_pic(last_race, DIRECTORY)
+            track_pic(last_race)
 
     # checks if next race returned by the API (for end of season)
     if next is not None and next is not False:
         if not os.path.isfile(
             f'./static/track_pics/{next["Circuit"]["circuitName"]}.jpg'
         ):
-            track_pic(next, DIRECTORY)
+            track_pic(next)
 
     # checks if next plus one race returned by the API (for end of season)
     if next_plus_one is not None and next_plus_one is not False:
         if not os.path.isfile(
             f'./static/track_pics/{next_plus_one["Circuit"]["circuitName"]}.jpg'
         ):
-            track_pic(next_plus_one, DIRECTORY)
+            track_pic(next_plus_one)
 
     # dict of teams in currrent year - preloads so wait time isn't  long on /drivers route
     if not teams_dict:
@@ -190,7 +186,7 @@ def drivers():
 
 @app.route("/teams", methods=["GET"])
 @login_required  # decorator to ensure logged in
-def teams():
+def constructors():
     """Gets info for current teams and displays their info in order of season standings"""
 
     # for dict  of all teams in currrent year

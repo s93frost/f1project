@@ -39,7 +39,7 @@ def picture(wiki_search_title):
         return None
 
 
-def track_pic(track, directory):
+def track_pic(track):
     """function for getting track pictures using the picture function defined above"""
     wiki_url = track["Circuit"]["url"]
     # splits out page title from wiki page for API search

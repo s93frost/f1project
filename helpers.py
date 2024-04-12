@@ -26,7 +26,7 @@ def picture(wiki_search_title):
         headers = {
             "User-Agent": "SffBot/0.0 (https://github.com/code50/47425976.git; sfproject@cs50.org)"
         }
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(url, headers=headers, timeout=120)
         if response.status_code == 200:
             print("successfully fetched the data")
         else:
@@ -57,7 +57,7 @@ def fastest(year, race):
     """API function for returning fastest driver in specified year and race"""
     try:
         response = requests.get(
-            f"http://ergast.com/api/f1/{year}/{race}/fastest/1/results.json?limit=500", timeout=10
+            f"http://ergast.com/api/f1/{year}/{race}/fastest/1/results.json?limit=500", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -74,7 +74,7 @@ def fastest(year, race):
 def seasons_history():
     """API function for returning seasons available in API"""
     try:
-        response = requests.get("http://ergast.com/api/f1.json?limit=1000&offset=250", timeout=10)
+        response = requests.get("http://ergast.com/api/f1.json?limit=1000&offset=250", timeout=120)
         if response.status_code == 200:
             print("successfully fetched the data")
         else:
@@ -95,7 +95,7 @@ def result_default():
     """API function for returning results of latest race"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/last/results.json?limit=500", timeout=10
+            "http://ergast.com/api/f1/current/last/results.json?limit=500", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -117,7 +117,7 @@ def result(year, race):
     """API function for returning results from a specific race by season and race"""
     try:
         response = requests.get(
-            f"http://ergast.com/api/f1/{year}/{race}/results.json?limit=500", timeout=10
+            f"http://ergast.com/api/f1/{year}/{race}/results.json?limit=500", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -135,7 +135,7 @@ def qualifying(year, race):
     """API function for returning results from a specific race by season and race"""
     try:
         response = requests.get(
-            f"http://ergast.com/api/f1/{year}/{race}/qualifying.json?limit=500", timeout=10
+            f"http://ergast.com/api/f1/{year}/{race}/qualifying.json?limit=500", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -153,7 +153,7 @@ def qualifying_default():
     """API function for returning results of latest race"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/last/qualifying.json?limit=500", timeout=10
+            "http://ergast.com/api/f1/current/last/qualifying.json?limit=500", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -175,7 +175,8 @@ def previous_race():
     """API function for returning previous race before the most recent"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/last/results.json?limit=500", timeout=10
+            "http://ergast.com/api/f1/current/last/results.json?limit=500", 
+            timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -188,7 +189,7 @@ def previous_race():
             last_season = season - 1
             response2 = requests.get(
                 f"http://ergast.com/api/f1/{last_season}/22/results.json?limit=500", 
-                timeout=10
+                timeout=120
             )
             if response2.status_code == 200:
                 data1 = response2.json()
@@ -196,7 +197,7 @@ def previous_race():
         else:  # if after first race of season, return  previous race of season
             response2 = requests.get(
                 f"http://ergast.com/api/f1/current/{previous_round}/results.json?limit=500", 
-                timeout=10
+                timeout=120
             )
             if response2.status_code == 200:
                 data1 = response2.json()
@@ -204,7 +205,7 @@ def previous_race():
 
     except (requests.RequestException, ValueError, KeyError, IndexError):
         print(
-            f"previous_race: there's a {response.status_code} error with your request"
+            "previous_race: there's an error with your request"
         )
         return None
 
@@ -214,7 +215,7 @@ def next_race(number):
     (increments e.g 1 is next, 2 is the second race from now etc)"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/last/results.json?limit=500", timeout=10
+            "http://ergast.com/api/f1/current/last/results.json?limit=500", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -229,7 +230,7 @@ def next_race(number):
             return False  # return false at end of season for app.py to use
         next_round = current_round + number  # takes the last race round and adds 1
         response2 = requests.get(
-            f"http://ergast.com/api/f1/current/{next_round}.json?limit=500", timeout=10
+            f"http://ergast.com/api/f1/current/{next_round}.json?limit=500", timeout=120
         )
         if response2.status_code == 200:
             data1 = response2.json()
@@ -244,7 +245,7 @@ def teams_lookup():
     """API function for returning all teams in current season"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/constructors.json?limit=500", timeout=10
+            "http://ergast.com/api/f1/current/constructors.json?limit=500", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -264,7 +265,7 @@ def drivers_lookup():
     """API function for returning all drivers in current season"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/drivers.json?limit=500", timeout=10
+            "http://ergast.com/api/f1/current/drivers.json?limit=500", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -287,7 +288,7 @@ def drivers_for_team(constructor):
     try:
         response = requests.get(
             f"http://ergast.com/api/f1/current/constructors/{constructor}/drivers.json?limit=500", 
-            timeout=10
+            timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -309,7 +310,7 @@ def driver_standings():
     """API function for returning the drivers based on championship standing"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/driverStandings.json?", timeout=10
+            "http://ergast.com/api/f1/current/driverStandings.json?", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -333,7 +334,7 @@ def team_standings():
     """API function for returning the teams based on championship standing"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/constructorStandings.json?", timeout=10
+            "http://ergast.com/api/f1/current/constructorStandings.json?", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -359,7 +360,7 @@ def lookup(driver, constructor):
     try:
         response = requests.get(
             f"http://ergast.com/api/f1/drivers/{driver}/constructors/{constructor}/seasons.json",
-            timeout=10
+            timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")

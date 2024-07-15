@@ -82,8 +82,10 @@ def index():
         db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
     )[0]["username"]
     last_race = previous_race()  # variable for the most recent completed race
-    global current_season
-    current_season = last_race["season"]
+    #idented the below to check for last_race being built
+    if last_race:
+        global current_season
+        current_season = last_race["season"]
     next = next_race(1)
     next_plus_one = next_race(2)
 

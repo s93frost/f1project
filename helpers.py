@@ -57,7 +57,7 @@ def fastest(year, race):
     """API function for returning fastest driver in specified year and race"""
     try:
         response = requests.get(
-            f"http://ergast.com/api/f1/{year}/{race}/fastest/1/results.json?limit=500", timeout=120
+            f"http://ergast.com/api/f1/{year}/{race}/fastest/1/results.json?limit=100", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -74,7 +74,7 @@ def fastest(year, race):
 def seasons_history():
     """API function for returning seasons available in API"""
     try:
-        response = requests.get("http://ergast.com/api/f1.json?limit=1000&offset=250", timeout=120)
+        response = requests.get("http://ergast.com/api/f1.json?limit=100&offset=1035", timeout=120)
         if response.status_code == 200:
             print("successfully fetched the data")
         else:
@@ -95,7 +95,7 @@ def result_default():
     """API function for returning results of latest race"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/last/results.json?limit=500", timeout=120
+            "http://ergast.com/api/f1/current/last/results.json?limit=100", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -117,7 +117,7 @@ def result(year, race):
     """API function for returning results from a specific race by season and race"""
     try:
         response = requests.get(
-            f"http://ergast.com/api/f1/{year}/{race}/results.json?limit=500", timeout=120
+            f"http://ergast.com/api/f1/{year}/{race}/results.json?limit=100", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -135,7 +135,7 @@ def qualifying(year, race):
     """API function for returning results from a specific race by season and race"""
     try:
         response = requests.get(
-            f"http://ergast.com/api/f1/{year}/{race}/qualifying.json?limit=500", timeout=120
+            f"http://ergast.com/api/f1/{year}/{race}/qualifying.json?limit=100", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -153,7 +153,7 @@ def qualifying_default():
     """API function for returning results of latest race"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/last/qualifying.json?limit=500", timeout=120
+            "http://ergast.com/api/f1/current/last/qualifying.json?limit=100", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -175,7 +175,7 @@ def previous_race():
     """API function for returning previous race before the most recent"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/last/results.json?limit=500", 
+            "http://ergast.com/api/f1/current/last/results.json?limit=100", 
             timeout=120
         )
         if response.status_code == 200:
@@ -188,7 +188,7 @@ def previous_race():
             season = int((data)["MRData"]["RaceTable"]["season"])
             last_season = season - 1
             response2 = requests.get(
-                f"http://ergast.com/api/f1/{last_season}/22/results.json?limit=500", 
+                f"http://ergast.com/api/f1/{last_season}/22/results.json?limit=100", 
                 timeout=120
             )
             if response2.status_code == 200:
@@ -196,7 +196,7 @@ def previous_race():
                 return (data1)["MRData"]["RaceTable"]["Races"][0]
         else:  # if after first race of season, return  previous race of season
             response2 = requests.get(
-                f"http://ergast.com/api/f1/current/{previous_round}/results.json?limit=500", 
+                f"http://ergast.com/api/f1/current/{previous_round}/results.json?limit=100", 
                 timeout=120
             )
             if response2.status_code == 200:
@@ -215,7 +215,7 @@ def next_race(number):
     (increments e.g 1 is next, 2 is the second race from now etc)"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/last/results.json?limit=500", timeout=120
+            "http://ergast.com/api/f1/current/last/results.json?limit=100", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -230,7 +230,7 @@ def next_race(number):
             return False  # return false at end of season for app.py to use
         next_round = current_round + number  # takes the last race round and adds 1
         response2 = requests.get(
-            f"http://ergast.com/api/f1/current/{next_round}.json?limit=500", timeout=120
+            f"http://ergast.com/api/f1/current/{next_round}.json?limit=100", timeout=120
         )
         if response2.status_code == 200:
             data1 = response2.json()
@@ -245,7 +245,7 @@ def teams_lookup():
     """API function for returning all teams in current season"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/constructors.json?limit=500", timeout=120
+            "http://ergast.com/api/f1/current/constructors.json?limit=100", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -265,7 +265,7 @@ def drivers_lookup():
     """API function for returning all drivers in current season"""
     try:
         response = requests.get(
-            "http://ergast.com/api/f1/current/drivers.json?limit=500", timeout=120
+            "http://ergast.com/api/f1/current/drivers.json?limit=100", timeout=120
         )
         if response.status_code == 200:
             print("successfully fetched the data")
@@ -287,7 +287,7 @@ def drivers_for_team(constructor):
     """API function for returning the drivers for a specific team"""
     try:
         response = requests.get(
-            f"http://ergast.com/api/f1/current/constructors/{constructor}/drivers.json?limit=500", 
+            f"http://ergast.com/api/f1/current/constructors/{constructor}/drivers.json?limit=100", 
             timeout=120
         )
         if response.status_code == 200:
